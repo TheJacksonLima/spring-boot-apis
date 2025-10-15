@@ -19,13 +19,6 @@ public class Car {
     @Column(unique = true, updatable = false,nullable = false)
     private String uuid = UUID.randomUUID().toString();
 
-    @PrePersist
-    public void ensureUuid() {
-        if (uuid == null) {
-            uuid = java.util.UUID.randomUUID().toString();
-        }
-    }
-
     @Size(min=1, message = "Brand should have at least 1 characters")
     private String brand;
 
