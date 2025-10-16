@@ -27,13 +27,15 @@ public class CarController {
     }
 
     @PostMapping("/cars")
-    public ResponseEntity<Car> createCar(@RequestBody Car car){
+    public ResponseEntity<CarDTO> createCar(@RequestBody Car car){
         Car savedCar = carService.save(car);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/id")
-                .buildAndExpand(savedCar.getId()).toUri();
+                .path("/{uuid}")
+                .buildAndExpand(savedCar.getUuid())
+                .toUri();
+        return ResponseEntity.created(location).body(CarDTO.from(savedCar));
 
-        return ResponseEntity.created(location).build();
+        //return ResponseEntity.created(location).build();
     }
 }
