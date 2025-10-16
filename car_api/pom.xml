@@ -30,6 +30,7 @@
 		<java.version>21</java.version>
 		<lombok.version>1.18.34</lombok.version>
 		<flyway.version>11.9.1</flyway.version>
+		<mockito_inline.version>5.2.0</mockito_inline.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -77,6 +78,17 @@
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-database-postgresql</artifactId>
 			<version>${flyway.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-inline</artifactId>
+			<version> ${mockito_inline.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
