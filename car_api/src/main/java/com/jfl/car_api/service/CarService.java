@@ -6,6 +6,7 @@ import com.jfl.car_api.exceptions.CarNotFoundException;
 import com.jfl.car_api.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,6 +38,11 @@ public class CarService {
 
     public Car save(Car car) {
         return carRepository.save(car);
+    }
+
+    @Transactional
+    public void delete(String uuid) {
+        carRepository.deleteByUuid(uuid);
     }
 
 }
