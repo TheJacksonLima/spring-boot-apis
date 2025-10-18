@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -22,7 +23,7 @@ public class CarService {
                 );
     }
 
-    public Car getByUuid(String uuid){
+    public Car getByUuid(String uuid) throws CarNotFoundException{
         return carRepository.findByUuid(uuid)
                 .orElseThrow(
                         ()-> new CarNotFoundException(uuid)
@@ -37,12 +38,27 @@ public class CarService {
     }
 
     public Car save(Car car) {
+        car.setUpdatedAt(Instant.now());
         return carRepository.save(car);
     }
 
     @Transactional
     public void delete(String uuid) {
         carRepository.deleteByUuid(uuid);
+    }
+
+    @Transactional
+    public Car patchByUuid(String uuid, CarDTO carDto){
+        Car car = getByUuid(uuid);
+
+        if (carDto.brand() != null)  car.setBrand(carDto.brand());
+        if (carDto.model() != null)  car.setModel(carDto.model());
+        if (carDto.color() != null)  car.setColor(carDto.color());
+        if (carDto.year()  != null)  car.setYear(carDto.year());
+        if (carDto.price() != null)  car.setPrice(carDto.price());
+        if (carDto.km()    != null)  car.setKm(carDto.km());
+
+        return save(car);
     }
 
 }
